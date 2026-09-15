@@ -1,17 +1,15 @@
 package com.devtalles.proyecto;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import com.devtalles.proyecto.task.controller.TaskController;
+import com.devtalles.proyecto.task.model.TaskRepository;
+import com.devtalles.proyecto.task.view.TaskView;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        TaskRepository taskRepository = new TaskRepository();
+        TaskController taskController = new TaskController(taskRepository);
+        TaskView taskView = new TaskView(taskController, new java.util.Scanner(System.in));
+        taskView.showMenu();
     }
 }
