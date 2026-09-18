@@ -1,18 +1,24 @@
 package com.devtalles.proyecto.task.model;
 
 import com.devtalles.proyecto.task.exepciones.TaskExeption;
+import com.devtalles.proyecto.task.persistence.TaskPersistence;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TaskRepository {
-    List<Task> tasks = new ArrayList<>();
+    List<Task> tasks;
+
+    public TaskRepository() {
+        tasks = TaskPersistence.loadTasks();
+    }
+
 
     public void save(Task task) throws TaskExeption {
        if(task == null) {
            throw new TaskExeption("Tarea no puede ser nula");
        }
        tasks.add(task);
+       TaskPersistence.saveTasks(tasks);
     }
 
     public Task findTaskById(String id) {
@@ -31,6 +37,7 @@ public class TaskRepository {
             throw new TaskExeption("Tarea no puede ser nula");
         }
         tasks.remove(taskToRemove);
+        TaskPersistence.saveTasks(tasks);
     }
 
     public void remove(Task task) throws TaskExeption {
@@ -42,6 +49,7 @@ public class TaskRepository {
             throw new TaskExeption("Tarea no encontrada");
         }
         tasks.remove(task);
+        TaskPersistence.saveTasks(tasks);
     }
 
     public List<Task> findAll() throws TaskExeption {
@@ -70,5 +78,6 @@ public class TaskRepository {
         } else {
             throw new TaskExeption("El indice " + index + " no encontrada");
         }
+        TaskPersistence.saveTasks(tasks);
     }
  }
